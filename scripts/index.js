@@ -3,6 +3,18 @@ const add = document.querySelector('.add');
 
 const list = document.querySelector('.list');
 
+function createDeleteButton(element) {
+  const btn = document.createElement('button');
+  btn.classList.add('remove');
+  btn.innerHTML = 'X';
+  element.appendChild(btn);
+}
+
+function clearInput() {
+  input.value = '';
+  input.focus();
+}
+
 function createListItem() {
   const li = document.createElement('li');
   li.classList.add('list-item');
@@ -14,8 +26,9 @@ function addTaskToList(task) {
   element.innerHTML = task;
 
   list.appendChild(element);
+  createDeleteButton(element);
 
-  input.value = '';
+  clearInput();
 }
 
 add.addEventListener('click', (event) => {
@@ -26,6 +39,12 @@ add.addEventListener('click', (event) => {
 
 input.addEventListener('keypress', (event) => {
   if (event.keyCode !== 13) return;
-  
+
   addTaskToList(input.value);
+});
+
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('remove')) {
+    event.target.parentElement.remove();
+  }
 });
